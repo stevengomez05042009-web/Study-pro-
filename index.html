@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>StudyPro | Organizador estudiantil</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#18233a;--text:#f3f6ff;--muted:#9caac5;--line:#293651;--accent:#7c9cff;--green:#51d6a0;--yellow:#ffd166;--red:#ff7b86}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#1c2d53 0,transparent 35%),var(--bg);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:10px 14px;background:var(--accent);color:#0b1020;font-weight:750}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.danger{background:#4a202d;color:#ffdce1}
+.wrap{max-width:1120px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#7c9cff,#51d6a0);color:#07111f;font-weight:900;font-size:23px}.brand h1{font-size:23px;margin:0}.brand p{margin:0;color:var(--muted)}.date{color:var(--muted);font-size:13px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.nav button{background:transparent;border:1px solid var(--line);color:var(--muted)}.nav button.active{background:var(--accent);color:#0b1020;border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}.stat,.panel{background:rgba(18,26,45,.94);border:1px solid var(--line);border-radius:18px;padding:18px}.stat span{color:var(--muted);font-size:13px}.stat strong{display:block;font-size:28px;margin-top:6px}.stat small{color:var(--muted)}.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.panel h2{font-size:18px;margin:0 0 14px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field label{font-size:13px;color:var(--muted)}input,select,textarea{width:100%;background:#0c1426;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.task{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.task input[type=checkbox]{width:18px;height:18px;margin-top:4px;accent-color:var(--green)}.taskmain{flex:1;min-width:0}.tasktitle{font-weight:700;overflow-wrap:anywhere}.task.done .tasktitle{text-decoration:line-through;color:var(--muted)}.meta{font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}.pill{font-size:11px;padding:3px 8px;border-radius:99px;background:#26334e;color:#dce5ff}.pill.high{background:#492b35;color:#ffc2c9}.pill.medium{background:#493d27;color:#ffe2a0}.pill.low{background:#1d403b;color:#a6f3d5}.empty{padding:26px 0;color:var(--muted);text-align:center}.progress{height:9px;background:#26334e;border-radius:99px;overflow:hidden;margin:12px 0}.progress div{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0;transition:width .2s}.subject{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);gap:10px}.subject:last-child{border:0}.subject strong{display:block}.subject small{color:var(--muted)}.subject-actions{display:flex;gap:6px}.subject-actions button{padding:6px 9px}.muted{color:var(--muted)}.hidden{display:none!important}.footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0}.filterrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}.filterrow input{flex:1;min-width:150px}.notice{font-size:12px;color:var(--muted);margin-top:10px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.wrap{padding:15px}.stat{padding:14px}.stat strong{font-size:25px}}
+@media(max-width:420px){.formgrid{grid-template-columns:1fr}.brand h1{font-size:20px}}
+</style>
+
+  <meta name="theme-color" content="#07152e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="StudyPro">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+ <div class="brand"><div class="logo">S</div><div><h1>StudyPro</h1><p>Tu estudio, organizado.</p></div></div>
+ <div class="date" id="today"></div>
+</header>
+<nav class="nav" aria-label="Secciones">
+ <button class="active" data-view="inicio">Resumen</button><button data-view="tareas">Mis tareas</button><button data-view="materias">Materias</button>
+</nav>
+<section id="view-inicio">
+ <div class="grid">
+  <div class="stat"><span>Tareas pendientes</span><strong id="pendingCount">0</strong><small>Por completar</small></div>
+  <div class="stat"><span>Completadas</span><strong id="doneCount">0</strong><small>Buen trabajo</small></div>
+  <div class="stat"><span>Materias</span><strong id="subjectCount">0</strong><small>En tu lista</small></div>
+  <div class="stat"><span>Progreso general</span><strong id="progressText">0%</strong><small>De todas tus tareas</small></div>
+ </div>
+ <div class="layout">
+  <section class="panel"><div class="panel-head"><h2>Próximas tareas</h2><button class="secondary" id="goTasks">Ver todas</button></div><div id="upcomingList"></div></section>
+  <section class="panel"><h2>Tu progreso</h2><p class="muted">Así va tu avance con las tareas registradas.</p><div class="progress"><div id="progressBar"></div></div><strong id="progressSummary">Todavía no hay tareas.</strong><p class="notice">Consejo: agrega las fechas de entrega para tener todo bajo control.</p></section>
+ </div>
+</section>
+<section id="view-tareas" class="hidden">
+ <div class="layout">
+  <section class="panel"><h2 id="formTitle">Agregar una tarea</h2>
+   <form id="taskForm">
+    <div class="field"><label for="taskTitle">Nombre de la tarea *</label><input id="taskTitle" maxlength="100" placeholder="Ej. Investigar sobre programación" required></div>
+    <div class="formgrid"><div class="field"><label for="taskSubject">Materia</label><select id="taskSubject"><option value="">Sin materia</option></select></div><div class="field"><label for="taskDate">Fecha de entrega</label><input id="taskDate" type="date"></div></div>
+    <div class="formgrid"><div class="field"><label for="taskPriority">Prioridad</label><select id="taskPriority"><option value="Media">Media</option><option value="Alta">Alta</option><option value="Baja">Baja</option></select></div><div class="field"><label for="taskType">Tipo</label><select id="taskType"><option>Deber</option><option>Examen</option><option>Proyecto</option><option>Presentación</option><option>Otro</option></select></div></div>
+    <div class="field"><label for="taskNotes">Notas (opcional)</label><textarea id="taskNotes" rows="2" maxlength="300" placeholder="Detalles que no quieres olvidar..."></textarea></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="saveTaskBtn" type="submit">Guardar tarea</button><button class="secondary hidden" id="cancelEdit" type="button">Cancelar</button></div>
+   </form>
+  </section>
+  <section class="panel"><div class="panel-head"><h2>Lista de tareas</h2><span class="pill" id="taskTotal">0 tareas</span></div>
+   <div class="filterrow"><input id="searchTasks" placeholder="Buscar tarea..."><select id="statusFilter" style="max-width:145px"><option value="all">Todas</option><option value="pending">Pendientes</option><option value="done">Completadas</option></select></div>
+   <div id="taskList"></div>
+  </section>
+ </div>
+</section>
+<section id="view-materias" class="hidden">
+ <div class="layout">
+  <section class="panel"><h2>Agregar una materia</h2><form id="subjectForm"><div class="field"><label for="subjectName">Nombre de la materia *</label><input id="subjectName" maxlength="60" placeholder="Ej. Programación" required></div><button type="submit">Agregar materia</button></form><p class="notice">Puedes eliminar una materia cuando ya no la necesites. Las tareas relacionadas no se borrarán.</p></section>
+  <section class="panel"><div class="panel-head"><h2>Mis materias</h2><span class="pill" id="subjectTotal">0 materias</span></div><div id="subjectList"></div></section>
+ </div>
+</section>
+<footer class="footer">StudyPro · Proyecto estudiantil · Tus datos se guardan en este navegador.</footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const STORE = 'studypro_v1';
+let data = {tasks:[], subjects:[]}, editingId = null;
+try { const saved = JSON.parse(localStorage.getItem(STORE)); if(saved && Array.isArray(saved.tasks) && Array.isArray(saved.subjects)) data = saved; } catch(e) {}
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const escapeHTML = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate = d => { if(!d) return 'Sin fecha'; const x = new Date(d+'T12:00:00'); return x.toLocaleDateString('es-NI',{day:'numeric',month:'short',year:'numeric'}); };
+const isLate = t => !t.done && t.date && t.date < new Date().toLocaleDateString('en-CA');
+function save(){localStorage.setItem(STORE,JSON.stringify(data)); render();}
+function go(view){document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));['inicio','tareas','materias'].forEach(v=>$('view-'+v).classList.toggle('hidden',v!==view));}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+$('goTasks').addEventListener('click',()=>go('tareas'));
+$('taskForm').addEventListener('submit',e=>{
+ e.preventDefault(); const title=$('taskTitle').value.trim(); if(!title)return;
+ const item={id:editingId||uid(),title,subject:$('taskSubject').value,date:$('taskDate').value,priority:$('taskPriority').value,type:$('taskType').value,notes:$('taskNotes').value.trim(),done:editingId?(data.tasks.find(t=>t.id===editingId)?.done||false):false};
+ if(editingId){data.tasks=data.tasks.map(t=>t.id===editingId?item:t);}else data.tasks.push(item);
+ resetTaskForm();save();
+});
+function resetTaskForm(){editingId=null;$('taskForm').reset();$('formTitle').textContent='Agregar una tarea';$('saveTaskBtn').textContent='Guardar tarea';$('cancelEdit').classList.add('hidden');}
+$('cancelEdit').addEventListener('click',resetTaskForm);
+$('subjectForm').addEventListener('submit',e=>{e.preventDefault();const name=$('subjectName').value.trim();if(!name)return;if(data.subjects.some(s=>s.toLowerCase()===name.toLowerCase())){alert('Esa materia ya existe.');return;}data.subjects.push(name);$('subjectForm').reset();save();});
+$('searchTasks').addEventListener('input',renderTasks);$('statusFilter').addEventListener('change',renderTasks);
+function taskHTML(t){return `<div class="task ${t.done?'done':''}"><input aria-label="Marcar tarea completada" type="checkbox" data-done="${t.id}" ${t.done?'checked':''}><div class="taskmain"><div class="tasktitle">${escapeHTML(t.title)}</div><div class="meta"><span>${escapeHTML(t.subject||'Sin materia')}</span><span>· ${fmtDate(t.date)}</span><span class="pill ${t.priority==='Alta'?'high':t.priority==='Baja'?'low':'medium'}">${escapeHTML(t.priority)}</span><span class="pill">${escapeHTML(t.type)}</span>${isLate(t)?'<span class="pill high">Vencida</span>':''}</div>${t.notes?`<div class="meta">${escapeHTML(t.notes)}</div>`:''}</div><button class="secondary" data-edit="${t.id}" aria-label="Editar tarea">✎</button><button class="danger" data-delete="${t.id}" aria-label="Eliminar tarea">×</button></div>`}
+function attachTaskActions(root){root.querySelectorAll('[data-done]').forEach(el=>el.addEventListener('change',()=>{const t=data.tasks.find(x=>x.id===el.dataset.done);if(t)t.done=el.checked;save();}));root.querySelectorAll('[data-edit]').forEach(el=>el.addEventListener('click',()=>editTask(el.dataset.edit)));root.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',()=>{if(confirm('¿Eliminar esta tarea?')){data.tasks=data.tasks.filter(t=>t.id!==el.dataset.delete);if(editingId===el.dataset.delete)resetTaskForm();save();}}));}
+function renderTasks(){const q=$('searchTasks').value.trim().toLowerCase(),f=$('statusFilter').value;let tasks=[...data.tasks].filter(t=>(t.title+' '+t.subject+' '+t.notes).toLowerCase().includes(q)&&(f==='all'||(f==='done'?t.done:!t.done)));tasks.sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));$('taskTotal').textContent=tasks.length+' tarea'+(tasks.length===1?'':'s');$('taskList').innerHTML=tasks.length?tasks.map(taskHTML).join(''):'<div class="empty">No hay tareas para mostrar.</div>';attachTaskActions($('taskList'));}
+function editTask(id){const t=data.tasks.find(x=>x.id===id);if(!t)return;editingId=id;$('taskTitle').value=t.title;$('taskSubject').value=t.subject;$('taskDate').value=t.date;$('taskPriority').value=t.priority;$('taskType').value=t.type;$('taskNotes').value=t.notes;$('formTitle').textContent='Editar tarea';$('saveTaskBtn').textContent='Guardar cambios';$('cancelEdit').classList.remove('hidden');$('taskTitle').focus();window.scrollTo({top:0,behavior:'smooth'});}
+function renderSubjects(){const old=$('taskSubject').value;$('taskSubject').innerHTML='<option value="">Sin materia</option>'+data.subjects.map(s=>`<option value="${escapeHTML(s)}">${escapeHTML(s)}</option>`).join('');if(data.subjects.includes(old))$('taskSubject').value=old;$('subjectTotal').textContent=data.subjects.length+' materia'+(data.subjects.length===1?'':'s');$('subjectCount').textContent=data.subjects.length;$('subjectList').innerHTML=data.subjects.length?data.subjects.map((s,i)=>`<div class="subject"><div><strong>${escapeHTML(s)}</strong><small>${data.tasks.filter(t=>t.subject===s).length} tarea(s)</small></div><div class="subject-actions"><button class="danger" data-subdel="${i}">Eliminar</button></div></div>`).join(''):'<div class="empty">Agrega tu primera materia.</div>';$('subjectList').querySelectorAll('[data-subdel]').forEach(b=>b.addEventListener('click',()=>{const s=data.subjects[Number(b.dataset.subdel)];if(confirm('¿Eliminar la materia "'+s+'"? Las tareas se conservarán sin materia.')){data.subjects.splice(Number(b.dataset.subdel),1);data.tasks.forEach(t=>{if(t.subject===s)t.subject='';});save();}}));}
+function renderHome(){const done=data.tasks.filter(t=>t.done).length,pending=data.tasks.length-done,pct=data.tasks.length?Math.round(done/data.tasks.length*100):0;$('pendingCount').textContent=pending;$('doneCount').textContent=done;$('progressText').textContent=pct+'%';$('progressBar').style.width=pct+'%';$('progressSummary').textContent=data.tasks.length?`${done} de ${data.tasks.length} tareas completadas.`:'Todavía no hay tareas.';let tasks=[...data.tasks].filter(t=>!t.done).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')).slice(0,5);$('upcomingList').innerHTML=tasks.length?tasks.map(taskHTML).join(''):'<div class="empty">¡Todo al día! Agrega tareas para empezar.</div>';attachTaskActions($('upcomingList'));}
+function render(){renderSubjects();renderTasks();renderHome();}
+$('today').textContent=new Date().toLocaleDateString('es-NI',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+render();
+</script>
+
+<script>
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>

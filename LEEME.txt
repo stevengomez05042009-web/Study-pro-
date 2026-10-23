@@ -1,0 +1,30 @@
+STUDYPRO — VERSIÓN INSTALABLE (PWA)
+
+Qué incluye
+- La app web original StudyPro.
+- Icono de aplicación y nombre StudyPro.
+- Manifest y service worker para instalación y caché sin conexión.
+- Los datos se guardan en el navegador de ese dispositivo; esta versión no sincroniza entre teléfonos.
+
+IMPORTANTE
+Para instalarla como app en iPhone, primero hay que publicar esta carpeta en una dirección HTTPS.
+El ZIP por sí solo no instala la app ni la publica en internet.
+
+Publicación sencilla con GitHub Pages
+1. Descomprime StudyPro-PWA.zip.
+2. Entra a https://github.com y crea un repositorio público llamado studypro.
+3. Sube TODOS los archivos y carpetas de esta carpeta a la raíz del repositorio.
+4. En Settings > Pages, selecciona Deploy from a branch, elige la rama main y la carpeta /(root), y guarda.
+5. Espera a que GitHub Pages muestre la dirección publicada (HTTPS).
+
+Instalar en iPhone
+1. Abre la dirección publicada en Safari (no dentro de Instagram o WhatsApp).
+2. Toca Compartir.
+3. Elige “Añadir a pantalla de inicio”.
+4. Confirma “Añadir”. Aparecerá el icono StudyPro.
+
+Instalar en Android
+1. Abre la dirección HTTPS en Chrome.
+2. Abre el menú ⋮ y elige “Instalar aplicación” o “Añadir a pantalla de inicio”.
+
+Consejo: antes de subirla, prueba index.html en una computadora. Para que la instalación PWA funcione de forma fiable, usa siempre HTTPS.
